@@ -60,6 +60,7 @@ ext {
     commonsMath = "3.6.1"
     mockk = "1.9.3"
     gson = "2.8.5"
+    joda = "2.10.1"
 }
 
 dependencies {
@@ -89,6 +90,7 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger"
 
     implementation "com.google.code.gson:gson:$gson"
+    implementation "joda-time:joda-time:$joda"
 
     testImplementation "junit:junit:$junit"
     testImplementation "androidx.arch.core:core-testing:$coreTesting"

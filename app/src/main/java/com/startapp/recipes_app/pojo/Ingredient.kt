@@ -2,6 +2,7 @@ package com.startapp.recipes_app.pojo
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import org.joda.time.DateTime
 
 class Ingredient {
 
@@ -15,5 +16,5 @@ class Ingredient {
 
     @SerializedName("use-by")
     @Expose
-    var useBy: String? = null
+    var useBy: DateTime? = null
 }
