@@ -4,8 +4,14 @@ import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
 import org.joda.time.DateTime
+import javax.inject.Inject
 
-class DateTimeJsonAdapter : TypeAdapter<DateTime?>() {
+
+/**
+ * convert joda-datetime from/to string
+ * */
+
+class DateTimeJsonAdapter @Inject constructor (): TypeAdapter<DateTime?>() {
     override fun write(out: JsonWriter?, value: DateTime?) {
         value?.let {
             out?.value(it.toString())

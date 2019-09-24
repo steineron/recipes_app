@@ -11,27 +11,30 @@ import java.io.InputStreamReader
  */
 object Utils {
 
-    private val gson: Gson = Gson()
-
 
     @JvmStatic
-    fun <T> readObject(resourcePath: String, klass: Class<T>): T? {
+    fun <T> readObject(resourcePath: String, klass: Class<T>, gson: Gson): T? {
 
         val streamReader =
             InputStreamReader(ClassLoader.getSystemResourceAsStream(resourcePath), "UTF-8")
-        return readObjectFromStream(streamReader, klass)
+        return readObjectFromStream(streamReader, klass, gson)
 
     }
 
     @JvmStatic
-    fun <T> readObject(stream: InputStream, klass: Class<T>): T? {
+    fun <T> readObject(stream: InputStream, klass: Class<T>, gson: Gson): T? {
         val streamReader = InputStreamReader(stream)
-        return readObjectFromStream(streamReader, klass)
+        return readObjectFromStream(streamReader, klass, gson)
 
     }
 
 
-    private fun <T> readObjectFromStream(streamReader: InputStreamReader, klass: Class<T>): T? {
+    @JvmStatic
+    fun <T> readObjectFromStream(
+        streamReader: InputStreamReader,
+        klass: Class<T>,
+        gson: Gson
+    ): T? {
         val jsonReader = JsonReader(streamReader)
         try {
             return gson.fromJson(jsonReader, klass)

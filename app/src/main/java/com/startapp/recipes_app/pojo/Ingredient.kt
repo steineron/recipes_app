@@ -12,7 +12,7 @@ class Ingredient {
 
     @SerializedName("best-before")
     @Expose
-    var bestBefore: String? = null
+    var bestBefore: DateTime? = null
 
     @SerializedName("use-by")
     @Expose

@@ -23,6 +23,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
+        animationsDisabled = true
+    }
 }
 
 ext {
@@ -96,6 +103,8 @@ dependencies {
     testImplementation "androidx.arch.core:core-testing:$coreTesting"
     testImplementation "io.mockk:mockk:$mockk"
 
+    kaptTest "com.google.dagger:dagger-android-processor:$dagger"
+    kaptTest "com.google.dagger:dagger-compiler:$dagger"
 
     kaptAndroidTest "com.google.dagger:dagger-android-processor:$dagger"
     kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger"
