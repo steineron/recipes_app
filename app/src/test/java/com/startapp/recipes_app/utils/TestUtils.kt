@@ -6,6 +6,8 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import com.google.gson.Gson
 import com.google.gson.stream.JsonReader
+import com.startapp.recipes_app.patterns.Observable
+import com.startapp.recipes_app.patterns.Observer
 import io.reactivex.Scheduler
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins
@@ -14,7 +16,18 @@ import io.reactivex.schedulers.TestScheduler
 import java.io.InputStream
 import java.io.InputStreamReader
 
+// capturer for observations in tests
+class Observations<T> : Observer<T> {
 
+
+    val observations: MutableList<T?> = mutableListOf()
+
+    override fun observed(value: T?, oldValue: T?, observable: Observable<T>) {
+        observations.add(value)
+    }
+}
+
+// static test util methods:
 object TestUtils {
 
     val testScheduler: TestScheduler = TestScheduler()
