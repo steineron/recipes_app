@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:lineSpacingExtra="12sp"
+        android:textColor="#122C12"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="Ham and Cheese" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:textColor="#00BCD4"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="Ham, Cheese" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/expiry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:gravity="right"
+        android:lineSpacingExtra="12sp"
+        android:textColor="#C7C7C7"
+        android:textSize="12sp"
+        tools:text="yesterday" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_margin="8dp"
+        android:background="#C7C7C7" />
+
+</LinearLayout>
