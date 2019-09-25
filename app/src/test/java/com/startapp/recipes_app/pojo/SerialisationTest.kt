@@ -13,9 +13,9 @@ import java.io.ByteArrayInputStream
 import java.io.InputStreamReader
 
 /**
- * test the deserialisation of ingrediaents from JSON
+ * test the deserialisation of ingredients and recipes from JSON
  */
-class IngredientsSerialisationTest {
+class SerialisationTest {
 
 
     @Component(modules = [DataModule::class])
@@ -27,12 +27,13 @@ class IngredientsSerialisationTest {
 
     @Before
     fun setUp() {
-        gson = DaggerIngredientsSerialisationTest_TestComponent.builder().build().gson()
+        gson = DaggerSerialisationTest_TestComponent.builder().build().gson()
     }
 
 
+    // ingredients
     @Test
-    fun that_deserialisation_reads_the_correct_values_from_JSON() {
+    fun that_ingredients_deserialisation_reads_the_correct_values_from_JSON() {
 
         val ingredients = Utils.readObject("raw/ingredients.json", Ingredients::class.java, gson)!!
 
@@ -138,4 +139,116 @@ class IngredientsSerialisationTest {
             assertNull(useBy)
         }
     }
+
+    // recipes
+    @Test
+    fun that_recipes_deserialisation_reads_the_correct_values_from_JSON() {
+
+        val recipes = Utils.readObject("raw/recipes.json", Recipes::class.java, gson)!!
+
+        assertEquals(recipes.recipes!!.size, 4)
+
+    }
+
+    @Test
+    fun that_recipe_is_deserialised_correctly() {
+        // setup
+        val json = "{\n" +
+                "      \"title\": \"Ham and Cheese Toastie\",\n" +
+                "      \"ingredients\": [\n" +
+                "        \"Ham\",\n" +
+                "        \"Cheese\",\n" +
+                "        \"Bread\",\n" +
+                "        \"Butter\"\n" +
+                "      ]\n" +
+                "    }"
+
+        // execute
+        val recipe =
+            Utils.readObjectFromStream(
+                InputStreamReader(json.byteInputStream()),
+                Recipe::class.java,
+                gson
+            )!!
+
+        // verify
+        with(recipe) {
+            assertEquals(title, "Ham and Cheese Toastie")
+            assertEquals(ingredients, listOf("Ham", "Cheese","Bread","Butter") )
+        }
+    }
+
+    @Test
+    fun that_recipe_is_deserialised_correctly_despite_missing_title() {
+        // setup
+        var json = "{\n" +
+                "      \"ingredients\": [\n" +
+                "        \"Ham\",\n" +
+                "        \"Cheese\",\n" +
+                "        \"Bread\",\n" +
+                "        \"Butter\"\n" +
+                "      ]\n" +
+                "    }"
+
+        // execute
+        val recipe =
+            Utils.readObjectFromStream(
+                InputStreamReader(json.byteInputStream()),
+                Recipe::class.java,
+                gson
+            )!!
+
+        // verify
+        with(recipe) {
+            assertNull(title)
+            assertEquals(ingredients, listOf("Ham", "Cheese","Bread","Butter") )
+        }
+    }
+
+
+    @Test
+    fun that_recipe_is_deserialised_correctly_despite_empty_ingredients() {
+        // setup
+        var json = "{\n" +
+                "      \"title\": \"Ham and Cheese Toastie\",\n" +
+                "      \"ingredients\": []\n" +
+                "    }"
+
+        // execute
+        val recipe =
+            Utils.readObjectFromStream(
+                InputStreamReader(json.byteInputStream()),
+                Recipe::class.java,
+                gson
+            )!!
+
+        // verify
+        with(recipe) {
+            assertEquals(title, "Ham and Cheese Toastie")
+            assertTrue(ingredients!!.isEmpty())
+        }
+    }
+    @Test
+    fun that_recipe_is_deserialised_correctly_despite_missing_ingredients() {
+        // setup
+        var json = "{\n" +
+                "      \"title\": \"Ham and Cheese Toastie\"\n" +
+                "    }"
+
+        // execute
+        val recipe =
+            Utils.readObjectFromStream(
+                InputStreamReader(json.byteInputStream()),
+                Recipe::class.java,
+                gson
+            )!!
+
+        // verify
+        with(recipe) {
+            assertEquals(title, "Ham and Cheese Toastie")
+            assertNull(ingredients)
+        }
+    }
+
+
 }
