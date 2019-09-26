@@ -130,7 +130,6 @@ internal class RecipesListAdapter(private val interactions: RecipesView.Interact
             with(holder.itemView){
                 name.text = recipe.name
                 ingredients.text = recipe.ingredients
-                expiry.text = recipe.expiration
             }
         }
     }

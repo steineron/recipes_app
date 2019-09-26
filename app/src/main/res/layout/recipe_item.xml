@@ -27,17 +27,6 @@
         android:textStyle="bold"
         tools:text="Ham, Cheese" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/expiry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:gravity="right"
-        android:lineSpacingExtra="12sp"
-        android:textColor="#C7C7C7"
-        android:textSize="12sp"
-        tools:text="yesterday" />
-
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
