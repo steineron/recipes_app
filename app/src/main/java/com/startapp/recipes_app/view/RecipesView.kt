@@ -79,6 +79,7 @@ class InteractionsImpl @Inject constructor(
     private val activity: WeakReference<AppCompatActivity>,
     private val viewState: ViewState
 ) : RecipesView.Interactions {
+
     override fun onSelectDate() {
         activity.get()?.let {
 
@@ -88,11 +89,11 @@ class InteractionsImpl @Inject constructor(
                 it,
                 DatePickerDialog.OnDateSetListener { _, y, m, d ->
 
-                    viewState.selectedDate = DateTime(y, m, d, 0, 0, 0)
+                    viewState.selectedDate = DateTime(y, m + 1, d, 0, 0, 0)
 
                 },
                 currDate.year,
-                currDate.monthOfYear,
+                currDate.monthOfYear - 1,
                 currDate.dayOfMonth
             ).also { dialog ->
 

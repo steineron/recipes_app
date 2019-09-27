@@ -44,6 +44,7 @@ class RecipesPresenter @Inject constructor(
         .subscribeOn(Schedulers.single())
         .observeOn(AndroidSchedulers.mainThread())
 
+    // update the view after building everything off the main thread
     private fun updateViewAsync() {
         with(disposables) {
             clear()
@@ -65,7 +66,7 @@ class RecipesPresenter @Inject constructor(
         ingredient.title != null &&
                 ingredient.useBy != null &&
                 ingredient.bestBefore != null &&
-                (ingredient.useBy!!.isBefore(ingredient.bestBefore) || ingredient.useBy == ingredient.bestBefore)
+                (ingredient.useBy!!.isAfter(ingredient.bestBefore) || ingredient.useBy == ingredient.bestBefore)
 
     }
 
@@ -93,7 +94,7 @@ class RecipesPresenter @Inject constructor(
                 val bestBeforePast = validIngredients
                     .filter { its: Ingredient ->
                         (its.bestBefore == timeToEat || its.bestBefore!!.isBefore(timeToEat)) &&
-                                its.useBy!!.isBefore(timeToEat) // still not expired but due it's best before....
+                                its.useBy!!.isAfter(timeToEat) // still not expired but due it's best before....
                     }
                     .map { it.title }
                     .toSet()
@@ -172,9 +173,9 @@ class RecipesPresenter @Inject constructor(
     private val selectedDateHelper = object : Observer<DateTime> {
         var dateFormatter = DateTimeFormatterBuilder()
             .appendDayOfMonth(2)
-            .appendLiteral('-')
-            .appendMonthOfYearText()
-            .appendLiteral('-')
+            .appendLiteral(" - ")
+            .appendMonthOfYearShortText()
+            .appendLiteral(" - ")
             .appendYear(4, 4)
             .toFormatter()
 

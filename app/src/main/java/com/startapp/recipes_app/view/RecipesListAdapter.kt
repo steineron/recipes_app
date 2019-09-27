@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.startapp.recipes_app.R
 import kotlinx.android.synthetic.main.recipe_item.view.*
 
-internal class RecipeViewHolder(view: View):RecyclerView.ViewHolder(view)
+internal class RecipeViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
-internal class RecipesDiffCallback: DiffUtil.ItemCallback<RecipesView.ViewModel>(){
+internal class RecipesDiffCallback : DiffUtil.ItemCallback<RecipesView.ViewModel>() {
     /**
      * Called to check whether two objects represent the same item.
      *
@@ -68,7 +68,7 @@ internal class RecipesDiffCallback: DiffUtil.ItemCallback<RecipesView.ViewModel>
     override fun areContentsTheSame(
         oldItem: RecipesView.ViewModel,
         newItem: RecipesView.ViewModel
-    ): Boolean = oldItem==newItem // data classes compare on the values and hashes
+    ): Boolean = oldItem.ingredients == newItem.name && oldItem.ingredients == newItem.ingredients
 
 }
 
@@ -99,7 +99,7 @@ internal class RecipesListAdapter(private val interactions: RecipesView.Interact
      * @see .onBindViewHolder
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
-        LayoutInflater.from(parent.context).inflate(R.layout.recipe_item, parent,false).also {
+        LayoutInflater.from(parent.context).inflate(R.layout.recipe_item, parent, false).also {
             return RecipeViewHolder(it)
         }
     }
@@ -125,13 +125,15 @@ internal class RecipesListAdapter(private val interactions: RecipesView.Interact
      * item at the given position in the data set.
      * @param position The position of the item within the adapter's data set.
      */
-    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
-        getItem(position).let { recipe->
-            with(holder.itemView){
+    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) =
+        getItem(position).let { recipe ->
+            with(holder.itemView) {
                 name.text = recipe.name
                 ingredients.text = recipe.ingredients
+                setOnClickListener {
+                    interactions.onRecipeClicked(recipe.recipe)
+                }
             }
         }
-    }
 
 }

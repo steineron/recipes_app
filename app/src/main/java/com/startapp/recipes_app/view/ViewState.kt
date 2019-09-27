@@ -3,13 +3,19 @@ package com.startapp.recipes_app.view
 import com.startapp.recipes_app.patterns.BehaviourSubject
 import org.joda.time.DateTime
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.properties.Delegates
 
-class ViewState @Inject constructor() {
+interface ViewState {
+    var selectedDate: DateTime
+    val selectedDateUpdates: BehaviourSubject<DateTime>
+}
+@Singleton
+class ViewStateImpl @Inject constructor() : ViewState {
 
-    var selectedDate:DateTime by Delegates.observable(DateTime.now()) {_, _:DateTime, newDate:DateTime ->
+    override var selectedDate:DateTime by Delegates.observable(DateTime.now()) { _, _:DateTime, newDate:DateTime ->
         selectedDateUpdates.emit(newDate)
     }
 
-    val selectedDateUpdates:BehaviourSubject<DateTime> = BehaviourSubject()
+    override val selectedDateUpdates:BehaviourSubject<DateTime> = BehaviourSubject()
 }

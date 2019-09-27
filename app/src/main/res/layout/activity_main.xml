@@ -20,6 +20,8 @@
 
     <Button
         android:id="@+id/date_picker"
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="#e6e6e6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"

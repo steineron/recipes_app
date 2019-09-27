@@ -17,6 +17,7 @@ import dagger.Provides
 import org.joda.time.DateTime
 import java.lang.ref.WeakReference
 import javax.inject.Scope
+import javax.inject.Singleton
 
 class MainActivity : AppCompatActivity() {
 
@@ -61,11 +62,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    @Scope
-    annotation class MainActivityScope
-
     @Component(modules = [DataModule::class, BindingsModule::class, ViewModule::class])
-    @MainActivityScope
+    @Singleton
     interface MainComponent {
 
         fun presenter(): Presenter
