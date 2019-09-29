@@ -131,7 +131,7 @@ internal class RecipesListAdapter(private val interactions: RecipesView.Interact
                 name.text = recipe.name
                 ingredients.text = recipe.ingredients
                 setOnClickListener {
-                    interactions.onRecipeClicked(recipe.recipe)
+                    interactions.onRecipe.onRecipeClicked(recipe.recipe)
                 }
             }
         }

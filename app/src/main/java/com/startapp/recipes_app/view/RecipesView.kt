@@ -30,12 +30,20 @@ interface RecipesView {
     interface Interactions {
 
         // invoked in response to the user's click on the date button
-        fun onSelectDate()
+        val onDate:OnDateSelected
 
         // invoked when the user clicks on a recipe in the list
-        fun onRecipeClicked(recipe: Recipe)
+        val onRecipe:OnRecipeClicked
     }
 
+    interface OnDateSelected {
+        fun onSelectDate()
+    }
+
+
+    interface OnRecipeClicked {
+        fun onRecipeClicked(recipe: Recipe)
+    }
 }
 
 
@@ -61,7 +69,7 @@ class RecipesViewImpl @Inject constructor(
         }
 
         view.date_picker.setOnClickListener {
-            interactions.onSelectDate()
+            interactions.onDate.onSelectDate()
         }
 
     }
@@ -80,7 +88,12 @@ class RecipesViewImpl @Inject constructor(
 class InteractionsImpl @Inject constructor(
     private val activity: WeakReference<AppCompatActivity>,
     private val viewState: ViewState
-) : RecipesView.Interactions {
+) : RecipesView.Interactions, RecipesView.OnDateSelected, RecipesView.OnRecipeClicked {
+
+    override val onDate: RecipesView.OnDateSelected
+        get() = this
+    override val onRecipe: RecipesView.OnRecipeClicked
+        get() = this
 
     override fun onSelectDate() {
         activity.get()?.let {
