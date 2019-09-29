@@ -29,8 +29,10 @@ interface RecipesView {
     // the interaction with the recipes list is the click, and the date-picker
     interface Interactions {
 
+        // invoked in response to the user's click on the date button
         fun onSelectDate()
 
+        // invoked when the user clicks on a recipe in the list
         fun onRecipeClicked(recipe: Recipe)
     }
 

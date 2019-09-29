@@ -19,6 +19,13 @@ import java.lang.ref.WeakReference
 import javax.inject.Scope
 import javax.inject.Singleton
 
+
+/**
+ * the main activity hosting the view nad controlling the scene.
+ *
+ * its responsibility is to setup the MVP components to start or stop.
+ *
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var presenter: Presenter
@@ -62,7 +69,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    @Component(modules = [DataModule::class, BindingsModule::class, ViewModule::class])
+    /**
+     * this Dagger component builds the whole MVP architecture and is able to provide the presenter and the view state for it's creator.
+     */
+    @Component(modules = [
+        DataModule::class, // contributing the date related pieces e.g GSON
+        BindingsModule::class, // maps (binds) MVP interfaces to their concrete implementations
+        ViewModule::class]) // contributes (provides) the view to the MVP
     @Singleton
     interface MainComponent {
 

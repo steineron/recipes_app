@@ -47,10 +47,7 @@ object TestUtils {
     /* this method is used to setup the main thread to a different Scheduler.
     * this way, we can try to verify some of the tasks are happening on the
     * different thread, by verifying the instance id from debugging.
-    *
-    * NOTE: This method is only used for Domain Account Model Test for now.
-    * Normally, most of the unit tests should ignore this setup.
-    */
+     */
     @JvmStatic
     fun convertMainSchedulersToTrampoline() {
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { trampolineMain }
@@ -69,38 +66,6 @@ object TestUtils {
     }
 
 
-
-    @JvmStatic
-    fun areDrawablesIdentical(drawableA: Drawable, drawableB: Drawable): Boolean {
-        val stateA = drawableA.constantState
-        val stateB = drawableB.constantState
-        // If the constant state is identical, they are using the same drawable resource.
-        // However, the opposite is not necessarily true - so compare bitmaps 1-to-1:
-        return stateA != null && stateB != null && stateA == stateB || getBitmap(drawableA).sameAs(getBitmap(drawableB))
-    }
-
-    private fun getBitmap(drawable: Drawable): Bitmap {
-        val result: Bitmap
-        if (drawable is BitmapDrawable) {
-            result = drawable.bitmap
-        } else {
-            var width = drawable.intrinsicWidth
-            var height = drawable.intrinsicHeight
-            // Some drawables have no intrinsic width - e.g. solid colours.
-            if (width <= 0) {
-                width = 1
-            }
-            if (height <= 0) {
-                height = 1
-            }
-
-            result = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(result)
-            drawable.setBounds(0, 0, canvas.width, canvas.height)
-            drawable.draw(canvas)
-        }
-        return result
-    }
 
 
 }

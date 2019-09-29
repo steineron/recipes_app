@@ -14,14 +14,3 @@ fun <T> Observer<T>.disregard(observable: Observable<T>): Unit {
 }
 
 
-/**
- * two extension function to observe/disregard completable
- */
-
-fun Completion.observe(completable: Completable){
-    completable.add(this)
-}
-
-fun Completion.disregard(completable: Completable){
-    completable.remove(this)
-}

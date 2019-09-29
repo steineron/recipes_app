@@ -13,8 +13,8 @@ import javax.inject.Inject
 import kotlin.properties.Delegates
 
 /**
- * the model represents the stateful data layer of the app - from loading hte data and holding
- * the most updates values, to communicating changes via observables
+ * the model represents the stateful data layer of the app - from loading the data and holding
+ * the most updated values, to communicating changes via observables
  */
 interface Model {
 
@@ -35,26 +35,26 @@ interface Model {
 
 }
 
-class ObservablesImpl :Model.Observables{
+internal class ObservablesImpl :Model.Observables{
     override val recipes: BehaviourSubject<Recipes?> = BehaviourSubject()
     override val ingredients: BehaviourSubject<Ingredients?> = BehaviourSubject()
 }
 
 class ModelImpl @Inject constructor(private val context: WeakReference<Context>, private  val gson: Gson):Model{
 
+    private val observablesImpl = ObservablesImpl()
 
-
-    override val observables = ObservablesImpl()
+    override val observables: Model.Observables
+        get() = observablesImpl
 
     override var recipes: Recipes? by Delegates.observable(null){ _, _:Recipes?, new:Recipes? ->
-        observables.recipes.emit(new)
+        observablesImpl.recipes.emit(new)
     }
 
     override var ingredients: Ingredients? by Delegates.observable(null){ _, _:Ingredients?, new:Ingredients? ->
-        observables.ingredients.emit(new)
+        observablesImpl.ingredients.emit(new)
     }
 
-    // now that the implementation is defined - initialise it
     init {
         // load the 2 jsons that serve as data for this task
 
